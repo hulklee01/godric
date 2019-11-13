@@ -1,0 +1,32 @@
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<div id="app2">
+    <h1 v-bind:title='message'>
+        Click This!
+    </h1>
+</div>
+<div id="app-3">
+    <p v-if='seen'>
+        catch me if you can
+    </p>
+</div>
+<div id="app">
+    {{message}}
+</div>
+<div id="app-4">
+    <ol>
+        <li v-for="man in mans">
+            {{ man.fn }}
+        </li>
+    </ol>
+</div>
+<div id="app-5">
+    <h1 v-on:click="changeMes">
+        {{message}}
+    </h1>
+</div>
+<div id='app-6'>
+    <p>{{message}}</p>
+    <input v-model="message">
+    <power></power>
+</div>
+<script src="simple.js"></script>
