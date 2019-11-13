@@ -4,7 +4,7 @@ import json
 import sqlite3
 
 
-conn = sqlite3.connect("user.db")
+conn = sqlite3.connect("data.db")
 c = conn.cursor()
 
 class RequestHandler(http.server.BaseHTTPRequestHandler):
