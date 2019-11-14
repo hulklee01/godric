@@ -10,24 +10,30 @@ c = conn.cursor()
 class RequestHandler(http.server.BaseHTTPRequestHandler):
 
     def do_POST(self):
-        f = self.rfile.peek().decode()
-        l = f.split('\"')
-        uid = l[3]
-        upw = l[7]
-        
+
+        data = self.rfile.peek()
+        print(type(data))
+        account = json.loads(data)
+        print(type(account))
+
+        uid = account['id']
+        upw = account['password']
+
         c.execute('select password from users where id=?', (uid,))
         pw = c.fetchone()
         
+        stat = 0
+        content = {}
+
         if pw is not None and upw == pw[0]:
-            self.send_response(HTTPStatus.OK)
-            content = '{\n\t\"code\":200\n}'
-            body = content.encode('UTF-8')
-            self.wfile.write(body)
+            stat = HTTPStatus.OK
+            content = {'code':200}
         else:
-            self.send_response(HTTPStatus.NOT_FOUND)
-            content = '{\n\t\"code\":404\n}'
-            body = content.encode('UTF-8')
-            self.wfile.write(body)
+            stat = HTTPStatus.NOT_FOUND
+            content = {'code':404}
+
+        self.send_response(stat)
+        self.wfile.write(json.dumps(content).encode('UTF-8'))
 
 
 
